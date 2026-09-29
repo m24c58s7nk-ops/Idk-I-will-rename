@@ -19,31 +19,20 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v6
-
-      - name: Setup Emscripten
-        uses: mymindstorm/setup-emsdk@v14
+        uses: actions/checkout@v4
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
         with:
-          version: latest
-
-      - name: Configure WebAssembly build
-        run: emcmake cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
-
-      - name: Build Gravity
-        run: cmake --build build --config Release -j2
-
+          dotnet-version: 8.0.x
+      - name: Publish Gravity
+        run: dotnet publish Gravity.csproj -c Release -o publish
       - name: Prepare website
         run: |
           mkdir -p site
-          cp build/Gravity.html site/index.html
-          cp build/Gravity.js site/
-          cp build/Gravity.wasm site/
-          cat > site/.nojekyll <<'EOF'
-          EOF
-
+          cp -r publish/wwwroot/* site/
+          cp site/index.html site/404.html
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v5
-
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v4
         with:
