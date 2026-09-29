@@ -168,7 +168,9 @@ static void GameFrame() {
 
     for (int i = 0; i < GetTouchPointCount(); ++i) {
         Vector2 t = GetTouchPosition(i);
-        float jumpDx = t.x - jumpCenter.x;\n        float jumpDy = t.y - jumpCenter.y;\n        if (std::sqrt(jumpDx * jumpDx + jumpDy * jumpDy) < jumpRadius) jumpPressed = true;
+        float jumpDx = t.x - jumpCenter.x;
+        float jumpDy = t.y - jumpCenter.y;
+        if (std::sqrt(jumpDx * jumpDx + jumpDy * jumpDy) < jumpRadius) jumpPressed = true;
 
         float dx = t.x - joystickBase.x;
         float d = std::sqrt(dx * dx + (t.y - joystickBase.y) * (t.y - joystickBase.y));
