@@ -1,0 +1,26 @@
+@page "/"
+@namespace Gravity.Pages
+@using Microsoft.JSInterop
+@inject IJSRuntime JS
+
+<div class="game-shell">
+    <canvas id="gravityCanvas" tabindex="0"></canvas>
+    <div class="loading" id="loading">Loading Gravity...</div>
+</div>
+
+@code {
+    private IJSObjectReference? module;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (!firstRender) return;
+        module = await JS.InvokeAsync<IJSObjectReference>("import", "./js/gravity.js");
+        await module.InvokeVoidAsync("startGravity", "gravityCanvas");
+    }
+
+    public async ValueTask DisposeAsync()
+    {
+        if (module is not null)
+            await module.DisposeAsync();
+    }
+}
