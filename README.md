@@ -1,18 +1,19 @@
 # Gravity
 
-A C++ 2D platformer prototype built with **Raylib**.
+A C# 2D platformer built for the browser with Blazor WebAssembly.
 
 ## First village lesson
 
 You begin at the character's house in a small village. Mira teaches the basic parkour controls while you travel across a simple platform route.
 
 ### Current features
+- C# gameplay logic
 - 2D platformer physics
 - Village with multiple houses and trees
 - Character's starting house
 - Friendly tutorial character named Mira
 - Beginner parkour route
-- Checkpoint-style respawn when falling
+- Respawn when falling
 - Tutorial signs
 - Completion banner and lesson message
 - Desktop controls
@@ -33,17 +34,11 @@ You begin at the character's house in a small village. Mira teaches the basic pa
 
 ## Build
 
-The project uses C++17 and CMake. Raylib is downloaded automatically by CMake.
+The project uses C#/.NET 8 and Blazor WebAssembly.
 
-### Desktop
-```bash
-cmake -S . -B build
-cmake --build build
-./build/Gravity
-```
+Run `dotnet restore`, then `dotnet build`, then `dotnet run`.
 
-### Browser
-A GitHub Actions workflow automatically builds the game with Emscripten and deploys it to GitHub Pages whenever `main` is updated.
+GitHub Actions publishes the browser version to GitHub Pages whenever `main` is updated.
 
 ## Planned next steps
 
