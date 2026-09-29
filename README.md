@@ -19,6 +19,7 @@ You begin at the character's house in a small village. Mira teaches the basic pa
 - On-screen mobile joystick
 - On-screen mobile jump button
 - Camera that follows the player
+- Browser/WebAssembly build through GitHub Pages
 
 ### Controls
 
@@ -34,11 +35,15 @@ You begin at the character's house in a small village. Mira teaches the basic pa
 
 The project uses C++17 and CMake. Raylib is downloaded automatically by CMake.
 
+### Desktop
 ```bash
 cmake -S . -B build
 cmake --build build
 ./build/Gravity
 ```
+
+### Browser
+A GitHub Actions workflow automatically builds the game with Emscripten and deploys it to GitHub Pages whenever `main` is updated.
 
 ## Planned next steps
 
@@ -48,4 +53,3 @@ cmake --build build
 4. Add the first Gravity-specific ability.
 5. Add checkpoints and multiple parkour lessons.
 6. Add sound and music.
-7. Prepare a browser/mobile build so the game can be tested without a desktop window.
