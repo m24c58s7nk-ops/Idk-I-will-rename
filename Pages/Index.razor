@@ -1,26 +1,83 @@
 @page "/"
 @namespace Gravity.Pages
 @using Microsoft.JSInterop
+@implements IAsyncDisposable
 @inject IJSRuntime JS
 
 <div class="game-shell">
     <canvas id="gravityCanvas" tabindex="0"></canvas>
-    <div class="loading" id="loading">Loading Gravity...</div>
 </div>
 
 @code {
     private IJSObjectReference? module;
+    private DotNetObjectReference<Index>? self;
+    private readonly GravityGame game = new();
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         if (!firstRender) return;
         module = await JS.InvokeAsync<IJSObjectReference>("import", "./js/gravity.js");
-        await module.InvokeVoidAsync("startGravity", "gravityCanvas");
+        self = DotNetObjectReference.Create(this);
+        await module.InvokeVoidAsync("startGravity", "gravityCanvas", self);
+    }
+
+    [JSInvokable]
+    public GravityState Tick(float move, bool jump)
+    {
+        game.Update(move, jump);
+        return game.State;
     }
 
     public async ValueTask DisposeAsync()
     {
-        if (module is not null)
-            await module.DisposeAsync();
+        self?.Dispose();
+        if (module is not null) await module.DisposeAsync();
     }
 }
+
+public sealed class GravityGame
+{
+    private readonly List<Platform> platforms =
+    [
+        new(0,620,2200,100), new(260,540,120,24), new(430,470,120,24),
+        new(610,400,120,24), new(800,330,130,24), new(1000,270,150,24),
+        new(1210,360,110,24), new(1370,300,120,24), new(1510,240,150,24),
+        new(1690,330,150,24), new(1880,270,180,24)
+    ];
+
+    private float x=120, y=500, vx, vy, messageTimer;
+    private bool grounded, finished;
+
+    public GravityState State => new(x,y,grounded,finished,messageTimer);
+
+    public void Update(float move, bool jump)
+    {
+        const float dt=1f/60f;
+        move=Math.Clamp(move,-1f,1f);
+        vx=move*260f;
+        vy+=1250f*dt;
+
+        if(jump && grounded){ vy=-540f; grounded=false; }
+
+        x=Math.Clamp(x+vx*dt,0,2160-34);
+        float oldBottom=y+50;
+        y+=vy*dt;
+        grounded=false;
+
+        foreach(var p in platforms)
+        {
+            bool overlapX=x<p.X+p.Width && x+34>p.X;
+            if(vy>=0 && overlapX && oldBottom<=p.Y+4 && y+50>=p.Y)
+            {
+                y=p.Y-50; vy=0; grounded=true;
+            }
+        }
+
+        if(y>800){ x=120; y=500; vx=0; vy=0; }
+        if(!finished && x>1850){ finished=true; messageTimer=6f; }
+        if(messageTimer>0) messageTimer=Math.Max(0,messageTimer-dt);
+    }
+}
+
+public readonly record struct Platform(float X,float Y,float Width,float Height);
+public readonly record struct GravityState(float X,float Y,bool Grounded,bool Finished,float MessageTimer);
