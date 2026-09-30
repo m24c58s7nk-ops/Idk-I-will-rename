@@ -3,7 +3,7 @@ export function startGravity(id, dotnet) {
     if(!canvas)return;
     const ctx=canvas.getContext("2d");
     const keys=new Set(), touches=new Map();
-    let last=performance.now(), state={X:120,Y:500,Finished:false,MessageTimer:0};
+    let last=performance.now(), state={x:120,y:500,finished:false,messageTimer:0};
 
     function resize(){
         const dpr=Math.min(devicePixelRatio||1,2);
@@ -65,7 +65,14 @@ export function startGravity(id, dotnet) {
         ctx.fillStyle="#f5be96";ctx.beginPath();ctx.arc(536,445,16,0,7);ctx.fill();ctx.fillStyle="#3565b5";ctx.fillRect(520,461,32,40);
         ctx.fillStyle="#111";ctx.beginPath();ctx.arc(530,442,3,0,7);ctx.arc(542,442,3,0,7);ctx.fill();ctx.fillStyle="#193d86";ctx.font="18px Arial";ctx.fillText("Mira",515,410);
         ctx.fillStyle="#f5e1a5";ctx.fillRect(1840,210,210,60);ctx.fillStyle="#54351f";ctx.font="22px Arial";ctx.fillText("VILLAGE TRAIL",1860,247);
-        ctx.fillStyle="#4669d2";ctx.fillRect(state.x,state.y,34,50);ctx.fillStyle="#f5c39b";ctx.beginPath();ctx.arc(state.x+17,state.y+12,12,0,7);ctx.fill();ctx.fillStyle="#173b93";ctx.fillRect(state.x+7,state.y+23,20,24);
+        ctx.fillStyle="#4669d2";ctx.fillRect(state.x,state.y,34,50);// Player character
+        const px=state.x, py=state.y;
+        ctx.fillStyle="#f2c29f";ctx.beginPath();ctx.arc(px+17,py+11,11,0,Math.PI*2);ctx.fill();
+        ctx.fillStyle="#5a3526";ctx.beginPath();ctx.arc(px+17,py+7,12,Math.PI,Math.PI*2);ctx.fill();
+        ctx.fillStyle="#2d6cdf";ctx.fillRect(px+5,py+22,24,19);
+        ctx.fillStyle="#f2c29f";ctx.fillRect(px+1,py+24,5,15);ctx.fillRect(px+28,py+24,5,15);
+        ctx.fillStyle="#26364a";ctx.fillRect(px+7,py+41,8,9);ctx.fillRect(px+19,py+41,8,9);
+        ctx.fillStyle="#17202a";ctx.fillRect(px+10,py+10,3,3);ctx.fillRect(px+21,py+10,3,3);
         ctx.restore();
 
         ctx.fillStyle="rgba(20,30,45,.86)";ctx.fillRect(0,0,w,74);ctx.fillStyle="white";ctx.font="bold 32px Arial";ctx.fillText("GRAVITY",28,43);
