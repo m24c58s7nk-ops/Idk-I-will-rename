@@ -49,7 +49,7 @@ export function startGravity(id, dotnet) {
     function draw(){
         const w=canvas.clientWidth,h=canvas.clientHeight;
         ctx.clearRect(0,0,w,h);ctx.fillStyle="#91cdf5";ctx.fillRect(0,0,w,h);
-        const camera=Math.max(0,Math.min(state.X-250,2160-w));
+        const camera=Math.max(0,Math.min(state.x-250,2160-w));
         ctx.save();ctx.translate(-camera,0);
         ctx.fillStyle="#f6d34a";ctx.beginPath();ctx.arc(1050,110,65,0,7);ctx.fill();
         ctx.fillStyle="#aabfa0";
@@ -65,16 +65,16 @@ export function startGravity(id, dotnet) {
         ctx.fillStyle="#f5be96";ctx.beginPath();ctx.arc(536,445,16,0,7);ctx.fill();ctx.fillStyle="#3565b5";ctx.fillRect(520,461,32,40);
         ctx.fillStyle="#111";ctx.beginPath();ctx.arc(530,442,3,0,7);ctx.arc(542,442,3,0,7);ctx.fill();ctx.fillStyle="#193d86";ctx.font="18px Arial";ctx.fillText("Mira",515,410);
         ctx.fillStyle="#f5e1a5";ctx.fillRect(1840,210,210,60);ctx.fillStyle="#54351f";ctx.font="22px Arial";ctx.fillText("VILLAGE TRAIL",1860,247);
-        ctx.fillStyle="#4669d2";ctx.fillRect(state.X,state.Y,34,50);ctx.fillStyle="#f5c39b";ctx.beginPath();ctx.arc(state.X+17,state.Y+12,12,0,7);ctx.fill();ctx.fillStyle="#173b93";ctx.fillRect(state.X+7,state.Y+23,20,24);
+        ctx.fillStyle="#4669d2";ctx.fillRect(state.x,state.y,34,50);ctx.fillStyle="#f5c39b";ctx.beginPath();ctx.arc(state.x+17,state.y+12,12,0,7);ctx.fill();ctx.fillStyle="#173b93";ctx.fillRect(state.x+7,state.y+23,20,24);
         ctx.restore();
 
         ctx.fillStyle="rgba(20,30,45,.86)";ctx.fillRect(0,0,w,74);ctx.fillStyle="white";ctx.font="bold 32px Arial";ctx.fillText("GRAVITY",28,43);
         ctx.font="22px Arial";ctx.fillStyle="#ddd";ctx.fillText("Village Parkour Lesson",190,43);ctx.font="18px Arial";ctx.fillStyle="white";
-        ctx.fillText(state.Finished?"Lesson complete! More gravity abilities coming next.":"Reach the trail sign to finish the first lesson.",520,43);
+        ctx.fillText(state.finished?"Lesson complete! More gravity abilities coming next.":"Reach the trail sign to finish the first lesson.",520,43);
         ctx.fillStyle="rgba(25,35,50,.55)";ctx.beginPath();ctx.arc(105,h-120,64,0,7);ctx.fill();ctx.fillStyle="rgba(225,235,245,.9)";ctx.beginPath();ctx.arc(105,h-120,28,0,7);ctx.fill();
         ctx.fillStyle="white";ctx.font="15px Arial";ctx.fillText("MOVE",76,h-48);ctx.fillStyle="rgba(70,125,215,.85)";ctx.beginPath();ctx.arc(w-120,h-120,58,0,7);ctx.fill();
         ctx.fillStyle="white";ctx.font="20px Arial";ctx.fillText("JUMP",w-152,h-110);ctx.font="18px Arial";ctx.fillText("PC: A/D or arrows  •  SPACE/W = jump",w/2-220,h-40);
-        if(state.MessageTimer>0){ctx.fillStyle="rgba(20,30,45,.9)";ctx.fillRect(w/2-340,105,680,72);ctx.fillStyle="white";ctx.font="22px Arial";ctx.fillText("Mira: Great job! You learned the basics of parkour.",w/2-305,135);ctx.fillStyle="#ddd";ctx.font="19px Arial";ctx.fillText("Next, we'll learn what makes Gravity different.",w/2-285,161);}
+        if(state.messageTimer>0){ctx.fillStyle="rgba(20,30,45,.9)";ctx.fillRect(w/2-340,105,680,72);ctx.fillStyle="white";ctx.font="22px Arial";ctx.fillText("Mira: Great job! You learned the basics of parkour.",w/2-305,135);ctx.fillStyle="#ddd";ctx.font="19px Arial";ctx.fillText("Next, we'll learn what makes Gravity different.",w/2-285,161);}
     }
 
     async function frame(now){
