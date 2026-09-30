@@ -65,13 +65,13 @@ export function startGravity(id, dotnet) {
         ctx.fillStyle="#f5be96";ctx.beginPath();ctx.arc(536,445,16,0,7);ctx.fill();ctx.fillStyle="#3565b5";ctx.fillRect(520,461,32,40);
         ctx.fillStyle="#111";ctx.beginPath();ctx.arc(530,442,3,0,7);ctx.arc(542,442,3,0,7);ctx.fill();ctx.fillStyle="#193d86";ctx.font="18px Arial";ctx.fillText("Mira",515,410);
         ctx.fillStyle="#f5e1a5";ctx.fillRect(1840,210,210,60);ctx.fillStyle="#54351f";ctx.font="22px Arial";ctx.fillText("VILLAGE TRAIL",1860,247);
-        ctx.fillStyle="#4669d2";ctx.fillRect(state.x,state.y,34,50);// Player character
+        /* Player character */
         const px=state.x, py=state.y;
         ctx.fillStyle="#f2c29f";ctx.beginPath();ctx.arc(px+17,py+11,11,0,Math.PI*2);ctx.fill();
         ctx.fillStyle="#5a3526";ctx.beginPath();ctx.arc(px+17,py+7,12,Math.PI,Math.PI*2);ctx.fill();
-        ctx.fillStyle="#2d6cdf";ctx.fillRect(px+5,py+22,24,19);
+        ctx.fillStyle="#2d6cdf";ctx.fillRect(px+4,py+21,26,21);
         ctx.fillStyle="#f2c29f";ctx.fillRect(px+1,py+24,5,15);ctx.fillRect(px+28,py+24,5,15);
-        ctx.fillStyle="#26364a";ctx.fillRect(px+7,py+41,8,9);ctx.fillRect(px+19,py+41,8,9);
+        ctx.fillStyle="#26364a";ctx.fillRect(px+6,py+41,9,9);ctx.fillRect(px+19,py+41,9,9);
         ctx.fillStyle="#17202a";ctx.fillRect(px+10,py+10,3,3);ctx.fillRect(px+21,py+10,3,3);
         ctx.restore();
 
