@@ -283,12 +283,44 @@ export function startGravity(id, dotnet) {
         }
     }
 
-    async function frame() {
-        const i=input();
-        state=await dotnet.invokeMethodAsync("Tick",i.move,i.jump);
+    let tickInFlight = false;
+    let tickError = null;
+
+    async function updateGameState() {
+        if (tickInFlight) return;
+        tickInFlight = true;
+
+        try {
+            const i = input();
+            state = await dotnet.invokeMethodAsync("Tick", i.move, i.jump);
+            tickError = null;
+        } catch (err) {
+            tickError = err;
+            console.error("Gravity Tick failed:", err);
+        } finally {
+            tickInFlight = false;
+        }
+    }
+
+    function frame() {
+        // Always render first so a C# interop problem cannot leave a blank/blue screen.
         draw();
+
+        if (tickError) {
+            const w = canvas.clientWidth;
+            ctx.fillStyle = "rgba(120,25,25,.92)";
+            roundedRect(w / 2 - 260, 88, 520, 58, 8);
+            ctx.fill();
+            ctx.fillStyle = "white";
+            ctx.font = "bold 16px Arial";
+            ctx.fillText("Game update connection error — rendering is still running.", w / 2 - 235, 123);
+        }
+
+        updateGameState();
         requestAnimationFrame(frame);
     }
 
+    // Draw immediately, before the first C# call.
+    draw();
     requestAnimationFrame(frame);
 }
