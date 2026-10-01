@@ -82,9 +82,10 @@ export function startGravity(id, dotnet) {
         if (snow) {
             ctx.fillStyle = snow;
             ctx.beginPath();
-            ctx.moveTo(points[1][0],points[1][1]);
-            ctx.lineTo(points[2][0],points[2][1]);
-            ctx.lineTo(points[3][0],points[3][1]);
+            const peak = points[Math.floor(points.length / 2)];
+            ctx.moveTo(peak[0], peak[1]);
+            ctx.lineTo(peak[0] - 75, peak[1] + 75);
+            ctx.lineTo(peak[0] + 75, peak[1] + 75);
             ctx.closePath();
             ctx.fill();
         }
